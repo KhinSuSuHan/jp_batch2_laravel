@@ -26,7 +26,7 @@
     <div class="form-group">
       <label for="InputProfile">Profile:</label>
       <input type="file" name="profile" class="form-control" id="InputProfile">
-      <img src="{{ asset($staff->profile)}}" alt="profile image">
+      <img src="{{ asset($staff->profile)}}" alt="profile image" width="300px" height="300px">
       <input type="hidden" name="oldprofile" value="{{$staff->profile}}">
     </div>
 
