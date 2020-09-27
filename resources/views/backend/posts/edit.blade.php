@@ -1,10 +1,10 @@
 @extends('backendtemplate')
-@extends('layouts.app')
+<!-- @extends('layouts.app') -->
 @section('title','Post Create')
 
 @section('content')
 <div class="row">
-  <div class="col-md-12 mt-5"><h1>Staff Edit</h1>
+  <div class="col-md-6"><h1>Staff Edit</h1>
     
     {{-- error --}}
     @if ($errors->any())
@@ -43,9 +43,9 @@
         </div>
 
         <div class="form-group">
-          <label for="InputProfile">Photo:</label>
-          <input type="file" name="photo" class="form-control" id="InputProfile">
-          <img src="{{asset($post->photo)}}" alt="profile photo" class="img-fluid mt-3" height="200" width="200">
+          <label for="InputPhoto">Photo:</label>
+          <input type="file" name="photo" class="form-control" id="InputPhoto">
+          <img src="{{asset($post->photo)}}" alt="photo" class="img-fluid mt-3" height="200" width="200">
           <input type="hidden" name="oldphoto" value="{{$post->photo}}">
         </div>
 

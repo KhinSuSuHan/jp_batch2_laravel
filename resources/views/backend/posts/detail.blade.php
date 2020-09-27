@@ -1,5 +1,5 @@
 @extends('backendtemplate')
-@extends('layouts.app')
+<!-- @extends('layouts.app') -->
 @section('title','Post List')
 
 @section('content')
