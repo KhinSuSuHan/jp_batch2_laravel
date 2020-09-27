@@ -16,14 +16,39 @@ use Illuminate\Support\Facades\Route;
 /*Route::get('/', function () {
     return view('welcome');
 */
-Route::get('/', 'PageController@home')->name('homepage');
 
-Route::get('main/{key}', 'PageController@main')->name('mainpage');
+//everybody can watch
+Route::get('/','MainController@main')->name('homepage');
 
-Route::resource('staff', 'StaffController'); //7 (get-4)(post-1)(put-1)(delete-1)
+Route::get('detail/{id}','MainController@detail')->name('detailpage');
+
+Route::get('main/{key}','PageController@main')->name('mainpage');
 
 
+Route::group(['middleware' => ['role:admin']], function () {
+  //admin
+  Route::resource('staff','StaffController');  // 7 (get-4)(post-1)(put-1)(delete-1)   routes
 
-Auth::routes();
+  Route::resource('payrolls','PayrollController');
+  //ajax
+  Route::post('getstaff','PayrollController@getstaff')->name('getstaff');
+
+  Route::post('getastaff','PayrollController@getastaff')->name('getastaff');
+
+  Route::resource('editors','UserController');
+});
+
+
+Route::group(['middleware' => ['role:editor']], function () {
+Route::resource('posts','PostController');
+});
+
+Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+
+
+
+
