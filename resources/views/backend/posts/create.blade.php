@@ -19,7 +19,7 @@
   @csrf
   <div class="form-group">
     <label for="InputCategory">Categories:</label>
-    <select name="Category" class="form-control">
+    <select name="category_id" class="form-control">
       <optgroup label="Choose Department">
         @foreach($categories as $row)
         <option value="{{$row->id}}">{{$row->name}}</option>
@@ -39,11 +39,11 @@
     <input type="file" name="photo" class="form-control" id="InputPhoto">
   </div>
 
-  <div class="form-group">
-    <label for="summernote">Content:</label>
-    {{-- <textarea class="form-control" name="content" id="summernote"></textarea> --}}
-    <div id="summernote"></div>
-  </div>
+   <div class="form-group">
+      <label for="summernote">Content:</label>
+      <textarea class="form-control" name="content" id="summernote"></textarea>
+ 
+    </div>
 
 
   <button type="submit" class="btn btn-primary">Create</button>
@@ -52,11 +52,11 @@
 @endsection
 
 @section('script')
-<script type="text/javascript">
-  $('#summernote').summernote({
-    placeholder: 'Your Content Here!',
-    tabsize: 2,
-    height: 200
-  });
-</script>
+  <script type="text/javascript" name="content">
+    $('#summernote').summernote({
+      placeholder: 'Your Content Here!',
+      tabsize: 2,
+      height: 200
+    });
+  </script>
 @endsection

@@ -1,81 +1,73 @@
 @extends('backendtemplate')
-@section('title','Staff Edit')
+@extends('layouts.app')
+@section('title','Post Create')
 
 @section('content')
-  <h1>Staff Edit</h1>
-  {{-- Error --}}
-  @if ($errors->any())
+<div class="row">
+  <div class="col-md-12 mt-5"><h1>Staff Edit</h1>
+    
+    {{-- error --}}
+    @if ($errors->any())
     <div class="alert alert-danger">
       <ul>
         @foreach ($errors->all() as $error)
-          <li>{{ $error }}</li>
+        <li>{{ $error }}</li>
         @endforeach
       </ul>
     </div>
-  @endif
+    @endif
+    {{-- form --}}
 
-  {{-- Form --}}
-  <form method="post" action="{{route('staff.update',$staff->id)}}" enctype="multipart/form-data">
-    @csrf
-    @method('PUT')
-    <div class="form-group">
-      <label for="InputDepartment">Department:</label>
-      <select name="department" class="form-control">
-        <optgroup label="Choose Department">
-          @foreach($departments as $row)
-          <option value="{{$row->id}}"
-           @if($row->id == $staff->department_id)
-           {{'selected'}}
-           @endif
-           >{{$row->name}}</option>
-          @endforeach
-        </optgroup>
-      </select>
+    <form method="post" action="{{route('posts.update',$post->id)}}" enctype="multipart/form-data">
+      @csrf
+      @method('PUT')
+
+      <div class="form-group">
+        <label for="InputCategory">Categories:</label>
+        <select name="category_id" class="form-control">
+          <optgroup label="Choose Categories">
+            @foreach($categories as $row)
+            <option value="{{$row->id}}"
+              @if($row->id==$post->category_id)
+              {{'selected'}}
+              @endif
+              >{{$row->name}}</option>
+              @endforeach
+            </optgroup>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="InputTitle">Title:</label>
+          <input type="text" name="title" class="form-control" id="InputTitle" value="{{$post->title}}">
+        </div>
+
+        <div class="form-group">
+          <label for="InputProfile">Photo:</label>
+          <input type="file" name="photo" class="form-control" id="InputProfile">
+          <img src="{{asset($post->photo)}}" alt="profile photo" class="img-fluid mt-3" height="200" width="200">
+          <input type="hidden" name="oldphoto" value="{{$post->photo}}">
+        </div>
+
+        <div class="form-group">
+          <label for="phoneNo">Content:</label>
+          <input type="text" name="content" class="form-control" id="summernote" value="{{$post->content}}">
+        </div>
+
+        <button type="submit" class="btn btn-success">Save</button>
+        <a href="{{route('posts.index')}}" class="btn btn-primary">Back</a>
+
+      </form>
     </div>
+  </div>
+  @endsection
 
-    <div class="form-group">
-      <label for="InputPosition">Position:</label>
-      <select name="position" class="form-control">
-        <optgroup label="Choose Position">
-          @foreach($positions as $row)
-          <option value="{{$row->id}}"
-          @if($row->id == $staff->position_id)
-          {{'selected'}}
-          @endif
-          >{{$row->name}}</option>
-          @endforeach
-        </optgroup>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="InputName">Name:</label>
-      <input type="text" name="name" class="form-control" id="InputName" value="{{$staff->name}}">
-    </div>
-
-    <div class="form-group">
-      <label for="InputProfile">Profile:</label>
-      <input type="file" name="profile" class="form-control" id="InputProfile">
-      <img src="{{ asset($staff->profile)}}" alt="profile image" width="300px" height="300px">
-      <input type="hidden" name="oldprofile" value="{{$staff->profile}}">
-    </div>
-
-    <div class="form-group">
-      <label for="phoneNo">Phone No</label>
-      <input type="text" name="phoneno" class="form-control" id="phoneNo" value="{{$staff->phoneno}}">
-    </div>
-
-    <div class="form-group">
-      <label for="address">Address</label>
-      <textarea class="form-control" name="address" id="address">{{$staff->address}}</textarea>
-    </div>
-
-    <div class="form-group">
-      <label for="Salary">Salary</label>
-      <input type="number" name="salary" class="form-control" id="Salary" value="{{$staff->salary}}">
-    </div>
-
-    <button type="submit" class="btn btn-primary">Update</button>
-     <a href="{{route('staff.index')}}" class="btn btn-primary">Back</a>
-  </form>
+ @section('script')
+  <script type="text/javascript" name="content">
+    $('#summernote').summernote({
+      placeholder: 'Your Content Here!',
+      tabsize: 2,
+      height: 200
+    });
+  </script>
 @endsection

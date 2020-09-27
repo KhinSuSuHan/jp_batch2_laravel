@@ -1,3 +1,4 @@
+ 
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,7 +26,7 @@
 
 <body>
 
- <!-- Navigation -->
+  <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
       <a class="navbar-brand" href="#">Start Bootstrap</a>
@@ -62,7 +63,8 @@
       <div class="col-md-8">
 
         @yield('content')
-        
+
+      </div>
 
       <!-- Sidebar Widgets Column -->
       <div class="col-md-4">
@@ -81,7 +83,7 @@
         </div>
 
         <!-- Categories Widget -->
-        <div class="card my-4">
+        {{-- <div class="card my-4">
           <h5 class="card-header">Categories</h5>
           <div class="card-body">
             <div class="row">
@@ -113,7 +115,9 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> --}}
+
+        <x-category></x-category>
 
         <!-- Side Widget -->
         <div class="card my-4">
@@ -131,7 +135,7 @@
   </div>
   <!-- /.container -->
 
-   <!-- Footer -->
+  <!-- Footer -->
   <footer class="py-5 bg-dark">
     <div class="container">
       <p class="m-0 text-center text-white">Copyright &copy; Your Website 2020</p>

@@ -1,15 +1,18 @@
 @extends('backendtemplate')
-@section('title','Staff Detail')
+@extends('layouts.app')
+@section('title','Post List')
 
 @section('content')
-  <h1>Staff Detail</h1> 
-  <img src="{{asset($staff->profile)}}" alt="Staff Profile" width="300px" height="300px">
-  <p>Name: {{$staff->name}}</p>
-  <p>Phone No: {{$staff->phoneno}}</p>
-  <p>Salary: {{$staff->salary}}</p>
-  <p>Address: {{$staff->address}}</p>
-  <p>Department: {{$staff->department->name}}</p>
-  <p>Position: {{$staff->position->name}}</p>
+<div class="row">
+	<div class="col-md-6"><h1>Post Detail</h1>
 
-  <a href="{{route('staff.index')}}" class="btn btn-primary">Back</a>
+		<form class="post">
+			<h3>Title : {{$post->title}}</h3>
+			<img src="{{asset($post->photo)}}" alt="This is a post photo!" class="img-fluid mb-4" height="200" width="200">
+			<h5>Content :{!!$post->content!!}</h5>
+		</form>
+
+		<a href="{{route('posts.index')}}" class="btn btn-primary">Back</a>
+	</div>
+</div>
 @endsection

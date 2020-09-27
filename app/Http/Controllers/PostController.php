@@ -15,9 +15,9 @@ class PostController extends Controller
      */
     public function index()
     {
-         $posts = Post::all();
-        return view('backend.posts.index',compact('posts'));
-    }
+       $posts = Post::all();
+       return view('backend.posts.index',compact('posts'));
+   }
 
     /**
      * Show the form for creating a new resource.
@@ -38,7 +38,31 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validation
+        $request->validate([
+            "category_id"=>"required",
+            "title" => "required",
+            "photo" => "required",            
+            "content" => "required"
+        ]);
+         // if include file, upload
+        if($request->file()) {
+            $fileName = time().'_'.$request->photo->getClientOriginalName(); // 1970 jan 1
+            $filePath = $request->file('photo')->storeAs('post_photo', $fileName, 'public');
+            $path = 'storage/'.$filePath;
+        }
+
+        // data store
+        $post = new Post;
+        $post->category_id = $request->category_id;
+        $post->photo = $path;
+        $post->title = $request->title;
+        $post->content = $request->content;
+        
+        $post->save();
+
+        // return redirect
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -49,7 +73,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('backend.posts.detail',compact('post'));
     }
 
     /**
@@ -60,8 +84,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
-    }
+       $categories = Category::all();
+       return view('backend.posts.edit',compact('post','categories'));
+   }
 
     /**
      * Update the specified resource in storage.
@@ -72,7 +97,33 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+         //validation
+        $request->validate([
+            "category_id"=>"required",
+            "title" => "required",
+            "photo" => "required",            
+            "content" => "required"
+        ]);
+         // if include file, upload
+        if($request->file()) {
+            $fileName = time().'_'.$request->photo->getClientOriginalName(); // 1970 jan 1
+            $filePath = $request->file('photo')->storeAs('post_photo', $fileName, 'public');
+            $path = 'storage/'.$filePath;
+        }else{
+            $path=$request->oldphoto;
+        }
+
+        // data store
+        
+        $post->category_id = $request->category_id;
+        $post->photo = $path;
+        $post->title = $request->title;
+        $post->content = $request->content;
+        
+        $post->save();
+
+        // return redirect
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -83,6 +134,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
-    }
+       $post->delete();
+       return redirect()->route('posts.index');
+   }
 }
